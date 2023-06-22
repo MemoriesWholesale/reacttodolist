@@ -1,17 +1,23 @@
-import Todoitem from './todoitem'
 import type { Task } from './todoitem'
+import Accordion from 'react-bootstrap/Accordion';
+import Button from 'react-bootstrap/Button';
 
 type Props = {
   tasks:Task[]
-  
+  handleRemove: (event:React.MouseEvent,task:Task)=>void
 }
 
-export default function ToDoList({tasks}: Props) {
+export default function ToDoList({tasks,handleRemove}: Props) {
   return (
     <div>  
-    <ul>
-        {tasks.map((t,i)=><li key={i}>{t.task}</li>)}
-    </ul>
+    <Accordion>
+    {tasks.map((t,i)=><Accordion.Item key={i} eventKey={i.toString()}>
+      <Accordion.Header>{t.task}</Accordion.Header>
+      <Accordion.Body>
+        <Button onClick={(e)=>handleRemove(e,t)}>Remove</Button>
+      </Accordion.Body>
+      </Accordion.Item>)}
+    </Accordion>
     </div>
   )
 }
